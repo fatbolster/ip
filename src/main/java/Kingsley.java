@@ -16,67 +16,17 @@ public class Kingsley {
                 break;
             }
             if (input.startsWith("mark")) {
-                String[] parts = input.split(" ");
-                int taskNumber = Integer.parseInt(parts[1]) - 1;
-                Task taskOfInterest = tasks[taskNumber];
-                taskOfInterest.markAsDone();
-                System.out.println("    ___________________________________________");
-                System.out.println("    Nice! I've marked this task as done: ");
-                System.out.println("       " + taskOfInterest.toString());
-                System.out.println("    ___________________________________________");
+                handleMark(input);
             } else if (input.startsWith("unmark")) {
-                String[] parts = input.split(" ");
-                int taskNumber = Integer.parseInt(parts[1]) - 1;
-                Task taskOfInterest = tasks[taskNumber];
-                taskOfInterest.markAsUndone();
-                System.out.println("    ___________________________________________");
-                System.out.println("    OK, I've marked this task as not done yet: ");
-                System.out.println("       " + taskOfInterest.toString());
-                System.out.println("    ___________________________________________");
+                handleUnmark(input);
             } else if (input.startsWith("deadline")) {
-                int byPos = input.indexOf("/by");
-                String taskDescription = input.substring("deadline".length(), byPos).trim();
-                String dueDate = input.substring(byPos + 3).trim();
-                Deadline deadlineTask = new Deadline(taskDescription, dueDate);
-                tasks[taskCount] = deadlineTask;
-                taskCount++;
-                System.out.println("    ___________________________________________");
-                System.out.println("    Got it. I've added this task:");
-                System.out.println("        " + deadlineTask.toString());
-                System.out.println("    Now you have " + taskCount + " tasks in the list.");
-                System.out.println("    ___________________________________________");
+                handleDeadline(input);
             } else if (input.startsWith("event")) {
-                int fromPos = input.indexOf("/from");
-                int toPos = input.indexOf("/to");
-                String taskDescription = input.substring("event".length(), fromPos).trim();
-                String startTime = input.substring(fromPos + 5, toPos).trim();
-                String endTime = input.substring(toPos + 3).trim();
-                Event eventTask = new Event(taskDescription, startTime, endTime);
-                tasks[taskCount] = eventTask;
-                taskCount++;
-                System.out.println("    ___________________________________________");
-                System.out.println("    Got it. I've added this task:");
-                System.out.println("        " + eventTask.toString());
-                System.out.println("    Now you have " + taskCount + " tasks in the list.");
-                System.out.println("    ___________________________________________");
+                handleEvent(input);
             } else if (input.startsWith("todo")) {
-                String taskDescription = input.substring("todo".length()).trim();
-                Todo toDoTask = new Todo(taskDescription);
-                tasks[taskCount] = toDoTask;
-                taskCount++;
-                System.out.println("    ___________________________________________");
-                System.out.println("    Got it. I've added this task:");
-                System.out.println("        " + toDoTask.toString());
-                System.out.println("    Now you have " + taskCount + " tasks in the list.");
-                System.out.println("    ___________________________________________");
+                handleToDo(input);
             } else if (input.equals("list")) {
-                System.out.println("    ___________________________________________");
-                System.out.println("    Here are the tasks in your list: ");
-                for (int i = 0; i < taskCount; i++) {
-                    int taskNumber = i + 1;
-                    System.out.println("     " + taskNumber + ". " + tasks[i].toString());
-                }
-                System.out.println("    ___________________________________________");
+                handleList(input);
             } else {
                 System.out.println("Invalid Input");
             }
@@ -88,4 +38,80 @@ public class Kingsley {
         System.out.println("    Bye! Hope to see you again soon!");
         System.out.println("    ___________________________________________");
     }
+
+
+    public static void handleMark(String input) {
+        String[] parts = input.split(" ");
+        int taskNumber = Integer.parseInt(parts[1]) - 1;
+        Task taskOfInterest = tasks[taskNumber];
+        taskOfInterest.markAsDone();
+        System.out.println("    ___________________________________________");
+        System.out.println("    Nice! I've marked this task as done:");
+        System.out.println("       " + taskOfInterest.toString());
+        System.out.println("    ___________________________________________");
+    }
+
+    public static void handleUnmark(String input) {
+        String[] parts = input.split(" ");
+        int taskNumber = Integer.parseInt(parts[1]) - 1;
+        Task taskOfInterest = Kingsley.tasks[taskNumber];
+        taskOfInterest.markAsUndone();
+        System.out.println("    ___________________________________________");
+        System.out.println("    OK, I've marked this task as not done yet:");
+        System.out.println("       " + taskOfInterest.toString());
+        System.out.println("    ___________________________________________");
+}
+    public static void handleDeadline(String input) {
+        int byPos = input.indexOf("/by");
+        String taskDescription = input.substring("deadline".length(), byPos).trim();
+        String dueDate = input.substring(byPos + 3).trim();
+        Deadline deadlineTask = new Deadline(taskDescription, dueDate);
+        tasks[taskCount] = deadlineTask;
+        taskCount++;
+        System.out.println("    ___________________________________________");
+        System.out.println("    Got it. I've added this task:");
+        System.out.println("        " + deadlineTask.toString());
+        System.out.println("    Now you have " + taskCount + " tasks in the list.");
+        System.out.println("    ___________________________________________");
+    }
+
+    public static void handleToDo(String input) {
+        String taskDescription = input.substring("todo".length()).trim();
+        Todo toDoTask = new Todo(taskDescription);
+        tasks[taskCount] = toDoTask;
+        taskCount++;
+        System.out.println("    ___________________________________________");
+        System.out.println("    Got it. I've added this task:");
+        System.out.println("        " + toDoTask.toString());
+        System.out.println("    Now you have " + taskCount + " tasks in the list.");
+        System.out.println("    ___________________________________________");
+    }
+
+    public static void handleEvent(String input) {
+        int fromPos = input.indexOf("/from");
+        int toPos = input.indexOf("/to");
+        String taskDescription = input.substring("event".length(), fromPos).trim();
+        String startTime = input.substring(fromPos + 5, toPos).trim();
+        String endTime = input.substring(toPos + 3).trim();
+        Event eventTask = new Event(taskDescription, startTime, endTime);
+        tasks[taskCount] = eventTask;
+        taskCount++;
+        System.out.println("    ___________________________________________");
+        System.out.println("    Got it. I've added this task:");
+        System.out.println("        " + eventTask.toString());
+        System.out.println("    Now you have " + taskCount + " tasks in the list.");
+        System.out.println("    ___________________________________________");
+    }
+
+    public static void handleList(String input) {
+        System.out.println("    ___________________________________________");
+        System.out.println("    Here are the tasks in your list:");
+        for (int i = 0; i < taskCount; i++) {
+            int taskNumber = i + 1;
+            System.out.println("     " + taskNumber + ". " + tasks[i].toString());
+        }
+        System.out.println("    ___________________________________________");
+    }
+
+
 }
