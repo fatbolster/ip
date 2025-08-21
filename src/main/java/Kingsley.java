@@ -3,7 +3,7 @@ import java.util.Scanner;
 public class Kingsley {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        String[] tasks = new String[100];
+        Task[] tasks = new Task[100];
         int taskCount = 0;
         System.out.println("    ------------------------------------------");
         System.out.println("    Hello! I'm Kingsley");
@@ -15,18 +15,38 @@ public class Kingsley {
             if (input.equals("bye")) {
                 break;
             }
-            if (input.equals("list")) {
+            if (input.startsWith("mark")) {
+                String[] parts = input.split(" ");
+                int taskNumber = Integer.parseInt(parts[1]) - 1;
+                Task taskOfInterest = tasks[taskNumber];
+                taskOfInterest.markAsDone();
                 System.out.println("    ___________________________________________");
+                System.out.println("    Nice! I've marked this task as done: ");
+                System.out.println("       " + taskOfInterest.toString());
+                System.out.println("    ___________________________________________");
+
+            } else if (input.startsWith("unmark")) {
+                String[] parts = input.split(" ");
+                int taskNumber = Integer.parseInt(parts[1]) - 1;
+                Task taskOfInterest = tasks[taskNumber];
+                taskOfInterest.markAsUndone();
+                System.out.println("    ___________________________________________");
+                System.out.println("    OK, I've marked this task as not done yet: ");
+                System.out.println("       " + taskOfInterest.toString());
+                System.out.println("    ___________________________________________");
+            } else if (input.equals("list")) {
+                System.out.println("    ___________________________________________");
+                System.out.println("    Here are the tasks in your list: ");
                 for (int i = 0; i < taskCount; i++) {
                     int taskNumber = i + 1;
-                    System.out.println("    " + taskNumber + ". " + tasks[i]);
+                    System.out.println("     " + taskNumber + ". " + tasks[i].toString());
                 }
                 System.out.println("    ___________________________________________");
             } else {
-                tasks[taskCount] = input;
+                tasks[taskCount] = new Task(input);
                 taskCount++;
                 System.out.println("    ___________________________________________");
-                System.out.println("     added: " + input);
+                System.out.println("    added: " + input);
                 System.out.println("    ___________________________________________");
 
             }
