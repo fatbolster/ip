@@ -1,11 +1,11 @@
 import java.util.Scanner;
 
 public class Kingsley {
+    private static final Task[] tasks = new Task[100];
+    private static int taskCount = 0;
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        Task[] tasks = new Task[100];
-        int taskCount = 0;
-        System.out.println("    ------------------------------------------");
+        System.out.println("    __________________________________________");
         System.out.println("    Hello! I'm Kingsley");
         System.out.println("    What can I do for you?");
         System.out.println("    __________________________________________");

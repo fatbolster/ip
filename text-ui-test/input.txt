@@ -1,0 +1,9 @@
+todo watch ma2104 lecture
+list
+deadline 2100 ip project /by Friday
+mark 1
+mark 2
+event orbital meeting /from Sat 3pm /to Sun 5pm
+list
+unmark 2
+bye
