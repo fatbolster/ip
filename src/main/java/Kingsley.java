@@ -1,7 +1,10 @@
+import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.List;
+import java.util.ArrayList;
 
 public class Kingsley {
-    private static final Task[] tasks = new Task[100];
+    private static final List<Task> tasks = new ArrayList<>();
     private static int taskCount = 0;
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
@@ -39,7 +42,6 @@ public class Kingsley {
 
         }
 
-
         System.out.println("    ___________________________________________");
         System.out.println("    Bye! Hope to see you again soon!");
         System.out.println("    ___________________________________________");
@@ -58,7 +60,7 @@ public class Kingsley {
         if (taskNumber >= taskCount) {
             throw new KingsleyException("Task number given is bigger than your total number of tasks!");
         }
-        Task taskOfInterest = tasks[taskNumber];
+        Task taskOfInterest = tasks.get(taskNumber);
         taskOfInterest.markAsDone();
         System.out.println("    ___________________________________________");
         System.out.println("    Nice! I've marked this task as done:");
@@ -78,7 +80,7 @@ public class Kingsley {
         if (taskNumber >= taskCount) {
             throw new KingsleyException("Task number given is bigger than your total number of tasks!");
         }
-        Task taskOfInterest = Kingsley.tasks[taskNumber];
+        Task taskOfInterest = tasks.get(taskNumber);
         taskOfInterest.markAsUndone();
         System.out.println("    ___________________________________________");
         System.out.println("    OK, I've marked this task as not done yet:");
@@ -99,7 +101,7 @@ public class Kingsley {
             throw new KingsleyException("Deadline task must have a deadline :3");
         }
         Deadline deadlineTask = new Deadline(taskDescription, dueDate);
-        tasks[taskCount] = deadlineTask;
+        tasks.add(deadlineTask);
         taskCount++;
         System.out.println("    ___________________________________________");
         System.out.println("    Got it. I've added this task:");
@@ -114,7 +116,7 @@ public class Kingsley {
             throw new KingsleyException("Please write a description for your todo");
         }
         Todo toDoTask = new Todo(taskDescription);
-        tasks[taskCount] = toDoTask;
+        tasks.add(toDoTask);
         taskCount++;
         System.out.println("    ___________________________________________");
         System.out.println("    Got it. I've added this task:");
@@ -145,7 +147,7 @@ public class Kingsley {
             throw new KingsleyException("Event must have an end time");
         }
         Event eventTask = new Event(taskDescription, startTime, endTime);
-        tasks[taskCount] = eventTask;
+        tasks.add(eventTask);
         taskCount++;
         System.out.println("    ___________________________________________");
         System.out.println("    Got it. I've added this task:");
@@ -162,7 +164,8 @@ public class Kingsley {
         System.out.println("    Here are the tasks in your list:");
         for (int i = 0; i < taskCount; i++) {
             int taskNumber = i + 1;
-            System.out.println("     " + taskNumber + ". " + tasks[i].toString());
+            Task currentTask = tasks.get(i);
+            System.out.println("     " + taskNumber + ". " + currentTask.toString());
         }
         System.out.println("    ___________________________________________");
     }
