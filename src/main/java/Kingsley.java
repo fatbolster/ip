@@ -25,6 +25,8 @@ public class Kingsley {
                     handleUnmark(input);
                 } else if (input.startsWith("deadline")) {
                     handleDeadline(input);
+                } else if (input.startsWith("delete")) {
+                    handleDelete(input);
                 } else if (input.startsWith("event")) {
                     handleEvent(input);
                 } else if (input.startsWith("todo")) {
@@ -156,7 +158,7 @@ public class Kingsley {
         System.out.println("    ___________________________________________");
     }
 
-    public static void handleList(String input) throws KingsleyException{
+    public static void handleList(String input) throws KingsleyException {
         if (taskCount == 0) {
             throw new KingsleyException("No tasks to show :D");
         }
@@ -168,6 +170,28 @@ public class Kingsley {
             System.out.println("     " + taskNumber + ". " + currentTask.toString());
         }
         System.out.println("    ___________________________________________");
+    }
+
+    public static void handleDelete(String input) throws KingsleyException {
+        String[] parts = input.split(" ");
+        if (parts.length < 2) {
+            throw new KingsleyException("Need a number to indicate what task to delete");
+        }
+        int taskNumber = Integer.parseInt(parts[1]) - 1;
+        if (taskNumber < 0) {
+            throw new KingsleyException("We only use positive task numbers here :(");
+        }
+        if (taskNumber >= taskCount) {
+            throw new KingsleyException("Task number given is bigger than your total number of tasks!");
+        }
+        Task deletedTask = tasks.remove(taskNumber);
+        taskCount--;
+        System.out.println("    ___________________________________________");
+        System.out.println("    Noted. I've rempved this task.");
+        System.out.println("       " + deletedTask.toString());
+        System.out.println("    Now you have " + taskCount + " tasks in the list.");
+        System.out.println("    ___________________________________________");
+
     }
 
 
