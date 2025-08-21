@@ -24,7 +24,6 @@ public class Kingsley {
                 System.out.println("    Nice! I've marked this task as done: ");
                 System.out.println("       " + taskOfInterest.toString());
                 System.out.println("    ___________________________________________");
-
             } else if (input.startsWith("unmark")) {
                 String[] parts = input.split(" ");
                 int taskNumber = Integer.parseInt(parts[1]) - 1;
@@ -33,6 +32,42 @@ public class Kingsley {
                 System.out.println("    ___________________________________________");
                 System.out.println("    OK, I've marked this task as not done yet: ");
                 System.out.println("       " + taskOfInterest.toString());
+                System.out.println("    ___________________________________________");
+            } else if (input.startsWith("deadline")) {
+                int byPos = input.indexOf("/by");
+                String taskDescription = input.substring("deadline".length(), byPos).trim();
+                String dueDate = input.substring(byPos + 3).trim();
+                Deadline deadlineTask = new Deadline(taskDescription, dueDate);
+                tasks[taskCount] = deadlineTask;
+                taskCount++;
+                System.out.println("    ___________________________________________");
+                System.out.println("    Got it. I've added this task:");
+                System.out.println("        " + deadlineTask.toString());
+                System.out.println("    Now you have " + taskCount + " tasks in the list.");
+                System.out.println("    ___________________________________________");
+            } else if (input.startsWith("event")) {
+                int fromPos = input.indexOf("/from");
+                int toPos = input.indexOf("/to");
+                String taskDescription = input.substring("event".length(), fromPos).trim();
+                String startTime = input.substring(fromPos + 5, toPos).trim();
+                String endTime = input.substring(toPos + 3).trim();
+                Event eventTask = new Event(taskDescription, startTime, endTime);
+                tasks[taskCount] = eventTask;
+                taskCount++;
+                System.out.println("    ___________________________________________");
+                System.out.println("    Got it. I've added this task:");
+                System.out.println("        " + eventTask.toString());
+                System.out.println("    Now you have " + taskCount + " tasks in the list.");
+                System.out.println("    ___________________________________________");
+            } else if (input.startsWith("todo")) {
+                String taskDescription = input.substring("todo".length()).trim();
+                Todo toDoTask = new Todo(taskDescription);
+                tasks[taskCount] = toDoTask;
+                taskCount++;
+                System.out.println("    ___________________________________________");
+                System.out.println("    Got it. I've added this task:");
+                System.out.println("        " + toDoTask.toString());
+                System.out.println("    Now you have " + taskCount + " tasks in the list.");
                 System.out.println("    ___________________________________________");
             } else if (input.equals("list")) {
                 System.out.println("    ___________________________________________");
@@ -43,15 +78,8 @@ public class Kingsley {
                 }
                 System.out.println("    ___________________________________________");
             } else {
-                tasks[taskCount] = new Task(input);
-                taskCount++;
-                System.out.println("    ___________________________________________");
-                System.out.println("    added: " + input);
-                System.out.println("    ___________________________________________");
-
+                System.out.println("Invalid Input");
             }
-
-
 
         }
 
