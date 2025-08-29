@@ -1,12 +1,23 @@
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.List;
-import java.util.ArrayList;
 
 public class Kingsley {
     private static final List<Task> tasks = new ArrayList<>();
     private static int taskCount = 0;
+    private static final String FILE_PATH = "./data/kingsley.txt";
+    private static final Storage LOCAL_STORAGE = new Storage(FILE_PATH);
+
     public static void main(String[] args) {
+        try {
+            ArrayList<Task> pastTasks = LOCAL_STORAGE.load();
+            tasks.addAll(pastTasks);
+            taskCount = tasks.size();
+        } catch (FileNotFoundException e){
+            System.out.println(e.getMessage());
+        }
         Scanner sc = new Scanner(System.in);
         System.out.println("    __________________________________________");
         System.out.println("    Hello! I'm Kingsley");
@@ -64,6 +75,11 @@ public class Kingsley {
         }
         Task taskOfInterest = tasks.get(taskNumber);
         taskOfInterest.markAsDone();
+        try {
+            LOCAL_STORAGE.save(new ArrayList<>(tasks));
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
         System.out.println("    ___________________________________________");
         System.out.println("    Nice! I've marked this task as done:");
         System.out.println("       " + taskOfInterest.toString());
@@ -84,6 +100,11 @@ public class Kingsley {
         }
         Task taskOfInterest = tasks.get(taskNumber);
         taskOfInterest.markAsUndone();
+        try {
+            LOCAL_STORAGE.save(new ArrayList<>(tasks));
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
         System.out.println("    ___________________________________________");
         System.out.println("    OK, I've marked this task as not done yet:");
         System.out.println("       " + taskOfInterest.toString());
@@ -105,6 +126,11 @@ public class Kingsley {
         Deadline deadlineTask = new Deadline(taskDescription, dueDate);
         tasks.add(deadlineTask);
         taskCount++;
+        try {
+            LOCAL_STORAGE.save(new ArrayList<>(tasks));
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
         System.out.println("    ___________________________________________");
         System.out.println("    Got it. I've added this task:");
         System.out.println("        " + deadlineTask.toString());
@@ -120,6 +146,11 @@ public class Kingsley {
         Todo toDoTask = new Todo(taskDescription);
         tasks.add(toDoTask);
         taskCount++;
+        try {
+            LOCAL_STORAGE.save(new ArrayList<>(tasks));
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
         System.out.println("    ___________________________________________");
         System.out.println("    Got it. I've added this task:");
         System.out.println("        " + toDoTask.toString());
@@ -151,6 +182,11 @@ public class Kingsley {
         Event eventTask = new Event(taskDescription, startTime, endTime);
         tasks.add(eventTask);
         taskCount++;
+        try {
+            LOCAL_STORAGE.save(new ArrayList<>(tasks));
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
         System.out.println("    ___________________________________________");
         System.out.println("    Got it. I've added this task:");
         System.out.println("        " + eventTask.toString());
@@ -186,6 +222,11 @@ public class Kingsley {
         }
         Task deletedTask = tasks.remove(taskNumber);
         taskCount--;
+        try {
+            LOCAL_STORAGE.save(new ArrayList<>(tasks));
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
         System.out.println("    ___________________________________________");
         System.out.println("    Noted. I've rempved this task.");
         System.out.println("       " + deletedTask.toString());
