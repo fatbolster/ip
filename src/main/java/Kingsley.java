@@ -1,5 +1,8 @@
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.List;
@@ -100,6 +103,8 @@ public class Kingsley {
         }
         Task taskOfInterest = tasks.get(taskNumber);
         taskOfInterest.markAsUndone();
+        Deadline deadlineTask;
+
         try {
             LOCAL_STORAGE.save(new ArrayList<>(tasks));
         } catch (IOException e) {
@@ -123,7 +128,17 @@ public class Kingsley {
         if (dueDate.isEmpty()) {
             throw new KingsleyException("Deadline task must have a deadline :3");
         }
-        Deadline deadlineTask = new Deadline(taskDescription, dueDate);
+        Deadline deadlineTask;
+        try {
+            LocalDateTime dt = DateParser.processDateAndTime(dueDate);
+            deadlineTask = new Deadline(taskDescription, dt);
+        } catch (DateTimeParseException e) {
+            throw new KingsleyException("Invalid format for date and time for deadline (dd/mm/yyyy HHmm)");
+        }
+
+
+
+
         tasks.add(deadlineTask);
         taskCount++;
         try {
@@ -179,7 +194,27 @@ public class Kingsley {
         if (endTime.isEmpty()) {
             throw new KingsleyException("Event must have an end time");
         }
-        Event eventTask = new Event(taskDescription, startTime, endTime);
+
+        LocalDateTime formattedStartTime;
+        LocalDateTime formattedEndTime;
+
+        try {
+            formattedStartTime = DateParser.processDateAndTime(startTime);
+        } catch (DateTimeParseException e) {
+            throw new KingsleyException("Invalid format for start date and time for event (dd/mm/yyyy HHmm)");
+        }
+
+        try {
+            formattedEndTime = DateParser.processDateAndTime(endTime);
+        } catch (DateTimeParseException e) {
+            throw new KingsleyException("Invalid format for end date and time for event (dd/mm/yyyy HHmm)");
+        }
+
+        if (formattedEndTime.isBefore(formattedStartTime)) {
+            throw new KingsleyException("End time must be after start time :D");
+        }
+
+        Event eventTask = new Event(taskDescription, formattedStartTime, formattedEndTime);
         tasks.add(eventTask);
         taskCount++;
         try {
@@ -234,6 +269,7 @@ public class Kingsley {
         System.out.println("    ___________________________________________");
 
     }
+
 
 
 }
