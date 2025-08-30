@@ -1,8 +1,11 @@
-public class Event extends Task {
-    protected String startTime;
-    protected String endTime;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
-    public Event(String description, String startTime, String endTime) {
+public class Event extends Task {
+    protected LocalDateTime startTime;
+    protected LocalDateTime endTime;
+
+    public Event(String description, LocalDateTime startTime, LocalDateTime endTime) {
         super(description);
         this.startTime = startTime;
         this.endTime = endTime;
@@ -10,12 +13,16 @@ public class Event extends Task {
 
     @Override
     public String toString() {
-        return "[E]" + super.toString() + " (from: " + startTime + " to: " + endTime + ")";
+        return "[E]" + super.toString() + " (from: " + DateParser.processDateTimeToString(startTime)
+                + " to: " + DateParser.processDateTimeToString(endTime) + ")";
     }
 
     @Override
     public String toSaveFormat() {
-        return "E | " + ( isDone ? 1 : 0 ) + " | "  + description + " | " + startTime + "-" + endTime;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/yyyy HHmm");
+        return "E | " + ( isDone ? 1 : 0 ) + " | "  + description + " | " +
+                DateParser.processDateTimeToStorageString(startTime)
+                + "-" + DateParser.processDateTimeToStorageString(endTime);
     }
 
 
