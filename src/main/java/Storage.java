@@ -1,5 +1,6 @@
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.io.IOException;
 import java.io.File;
@@ -38,8 +39,10 @@ public class Storage {
                     String time = parts[3];
                     String[] timePeriods = time.split("-");
                     String startTime = timePeriods[0];
+                    LocalDateTime parsedStartDate = DateParser.processDateAndTime(startTime);
                     String endTime = timePeriods[1];
-                    Event event = new Event(description, startTime, endTime);
+                    LocalDateTime parsedEndDate = DateParser.processDateAndTime(endTime);
+                    Event event = new Event(description, parsedStartDate, parsedEndDate);
                     if (isDone) {
                         event.markAsDone();
                     }
@@ -47,7 +50,8 @@ public class Storage {
                     break;
                 case "D":
                     String dueDate = parts[3];
-                    Deadline deadline = new Deadline(description, dueDate);
+                    LocalDateTime parsedDate = DateParser.processDateAndTime(dueDate);
+                    Deadline deadline = new Deadline(description, parsedDate);
                     if (isDone) {
                         deadline.markAsDone();
                     }
