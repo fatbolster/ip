@@ -1,11 +1,6 @@
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeParseException;
-import java.util.ArrayList;
+package Kingsley;
+
 import java.util.Scanner;
-import java.util.List;
 
 public class Kingsley {
     private Ui ui;

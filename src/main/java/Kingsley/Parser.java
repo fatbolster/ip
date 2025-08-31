@@ -1,7 +1,8 @@
+package Kingsley;
+
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
-import java.util.ArrayList;
 
 public class Parser {
 
@@ -25,7 +26,7 @@ public class Parser {
             throw new KingsleyException("We only use positive task numbers here :(");
         }
         if (taskNumber >= tasks.size()) {
-            throw new KingsleyException("Task number given is bigger than your total number of tasks!");
+            throw new KingsleyException("Kingsley.Task number given is bigger than your total number of tasks!");
         }
         Task taskOfInterest = tasks.get(taskNumber);
         taskOfInterest.markAsDone();
@@ -46,7 +47,7 @@ public class Parser {
             throw new KingsleyException("We only use positive task numbers here :(");
         }
         if (taskNumber >= tasks.size()) {
-            throw new KingsleyException("Task number given is bigger than your total number of tasks!");
+            throw new KingsleyException("Kingsley.Task number given is bigger than your total number of tasks!");
         }
         Task taskOfInterest = tasks.get(taskNumber);
         taskOfInterest.markAsUndone();
@@ -71,7 +72,7 @@ public class Parser {
         }
         String dueDate = input.substring(byPos + 3).trim();
         if (dueDate.isEmpty()) {
-            throw new KingsleyException("Deadline task must have a deadline :3");
+            throw new KingsleyException("Kingsley.Deadline task must have a deadline :3");
         }
         Deadline deadlineTask;
         try {
@@ -116,15 +117,15 @@ public class Parser {
         }
         String taskDescription = input.substring(0, fromPos).trim();
         if (taskDescription.isEmpty()) {
-            throw new KingsleyException("Event must have a description");
+            throw new KingsleyException("Kingsley.Event must have a description");
         }
         String startTime = input.substring(fromPos + 5, toPos).trim();
         if (startTime.isEmpty()) {
-            throw new KingsleyException("Event must have a start time");
+            throw new KingsleyException("Kingsley.Event must have a start time");
         }
         String endTime = input.substring(toPos + 3).trim();
         if (endTime.isEmpty()) {
-            throw new KingsleyException("Event must have an end time");
+            throw new KingsleyException("Kingsley.Event must have an end time");
         }
 
         LocalDateTime formattedStartTime;
@@ -165,7 +166,7 @@ public class Parser {
             throw new KingsleyException("We only use positive task numbers here :(");
         }
         if (taskNumber >= tasks.size()) {
-            throw new KingsleyException("Task number given is bigger than your total number of tasks!");
+            throw new KingsleyException("Kingsley.Task number given is bigger than your total number of tasks!");
         }
         Task deletedTask = tasks.remove(taskNumber);
         try {

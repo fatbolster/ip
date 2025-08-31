@@ -1,13 +1,13 @@
-import java.util.ArrayList;
+package Kingsley;
+
 import java.util.List;
-import java.util.Scanner;
 
 public class Ui {
     private static String NEW_LINE = "    __________________________________________";
 
     public void showGreeting() {
         printLine();
-        System.out.println("    Hello! I'm Kingsley");
+        System.out.println("    Hello! I'm Kingsley.");
         System.out.println("    What can I do for you?");
         printLine();
     }
