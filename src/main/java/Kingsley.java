@@ -8,24 +8,23 @@ import java.util.Scanner;
 import java.util.List;
 
 public class Kingsley {
-    private static final List<Task> tasks = new ArrayList<>();
-    private static int taskCount = 0;
-    private static final String FILE_PATH = "./data/kingsley.txt";
-    private static final Storage LOCAL_STORAGE = new Storage(FILE_PATH);
+    private Ui ui;
+    private Storage storage;
+    private TaskList tasks;
 
-    public static void main(String[] args) {
+    public Kingsley(String filePath) {
+        this.ui = new Ui();
+        this.storage = new Storage(filePath);
         try {
-            ArrayList<Task> pastTasks = LOCAL_STORAGE.load();
-            tasks.addAll(pastTasks);
-            taskCount = tasks.size();
-        } catch (FileNotFoundException e){
-            System.out.println(e.getMessage());
+            this.tasks = new TaskList(storage.load());
+        } catch (KingsleyException e) {
+            this.tasks = new TaskList();
         }
+    }
+
+    public void run() {
         Scanner sc = new Scanner(System.in);
-        System.out.println("    __________________________________________");
-        System.out.println("    Hello! I'm Kingsley");
-        System.out.println("    What can I do for you?");
-        System.out.println("    __________________________________________");
+        ui.showGreeting();
 
         while (true) {
             String input = sc.nextLine();
@@ -216,60 +215,41 @@ public class Kingsley {
 
         Event eventTask = new Event(taskDescription, formattedStartTime, formattedEndTime);
         tasks.add(eventTask);
-        taskCount++;
         try {
-            LOCAL_STORAGE.save(new ArrayList<>(tasks));
+            storage.save(tasks.getTaskList());
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
-        System.out.println("    ___________________________________________");
-        System.out.println("    Got it. I've added this task:");
-        System.out.println("        " + eventTask.toString());
-        System.out.println("    Now you have " + taskCount + " tasks in the list.");
-        System.out.println("    ___________________________________________");
+        ui.showEvent(eventTask, tasks.size());
     }
 
-    public static void handleList(String input) throws KingsleyException {
-        if (taskCount == 0) {
+    public void handleList() throws KingsleyException {
+        if (tasks.size() == 0) {
             throw new KingsleyException("No tasks to show :D");
         }
-        System.out.println("    ___________________________________________");
-        System.out.println("    Here are the tasks in your list:");
-        for (int i = 0; i < taskCount; i++) {
-            int taskNumber = i + 1;
-            Task currentTask = tasks.get(i);
-            System.out.println("     " + taskNumber + ". " + currentTask.toString());
-        }
-        System.out.println("    ___________________________________________");
+        ui.showList(tasks.getTaskList());
     }
 
-    public static void handleDelete(String input) throws KingsleyException {
-        String[] parts = input.split(" ");
-        if (parts.length < 2) {
-            throw new KingsleyException("Need a number to indicate what task to delete");
+    public void handleDelete(String input) throws KingsleyException {
+        if (input.trim().isEmpty()) {
+            throw new KingsleyException("Need a number to indicate what task to mark");
         }
-        int taskNumber = Integer.parseInt(parts[1]) - 1;
+        int taskNumber = Integer.parseInt(input.trim()) - 1;
         if (taskNumber < 0) {
             throw new KingsleyException("We only use positive task numbers here :(");
         }
-        if (taskNumber >= taskCount) {
+        if (taskNumber >= tasks.size()) {
             throw new KingsleyException("Task number given is bigger than your total number of tasks!");
         }
         Task deletedTask = tasks.remove(taskNumber);
-        taskCount--;
         try {
-            LOCAL_STORAGE.save(new ArrayList<>(tasks));
+            storage.save(tasks.getTaskList());
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
-        System.out.println("    ___________________________________________");
-        System.out.println("    Noted. I've rempved this task.");
-        System.out.println("       " + deletedTask.toString());
-        System.out.println("    Now you have " + taskCount + " tasks in the list.");
-        System.out.println("    ___________________________________________");
 
+        ui.showDelete(deletedTask, tasks.size());
     }
-
 
 
 }
