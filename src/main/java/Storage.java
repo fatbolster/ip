@@ -14,13 +14,17 @@ public class Storage {
         this.filePath = filePath;
     }
 
-    public ArrayList<Task> load() throws FileNotFoundException {
+    public ArrayList<Task> load() throws KingsleyException {
         ArrayList<Task> taskList = new ArrayList<>();
         File f = new File(filePath);
-        if (!f.exists()) {
-            return taskList;
+
+        Scanner s;
+        try {
+            s = new Scanner(f);
+        } catch (FileNotFoundException e) {
+            throw new KingsleyException("No such file exists!");
         }
-        Scanner s = new Scanner(f);
+
         while (s.hasNextLine()) {
             String line = s.nextLine();
             String[] parts = line.split(" \\| ");
