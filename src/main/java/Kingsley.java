@@ -32,94 +32,88 @@ public class Kingsley {
                 break;
             }
             try {
-                if (input.startsWith("mark")) {
-                    handleMark(input);
+                String[] parts = Parser.split(input);
+                String command = parts[0];
+                String arguments = parts[1];
+                if (command.equals("mark")) {
+                    handleMark(arguments);
                 } else if (input.startsWith("unmark")) {
-                    handleUnmark(input);
+                    handleUnmark(arguments);
                 } else if (input.startsWith("deadline")) {
-                    handleDeadline(input);
+                    handleDeadline(arguments);
                 } else if (input.startsWith("delete")) {
-                    handleDelete(input);
+                    handleDelete(arguments);
                 } else if (input.startsWith("event")) {
-                    handleEvent(input);
+                    handleEvent(arguments);
                 } else if (input.startsWith("todo")) {
-                    handleToDo(input);
+                    handleToDo(arguments);
                 } else if (input.equals("list")) {
-                    handleList(input);
+                    handleList();
                 } else {
                     throw new KingsleyException("No such command exists :(");
                 }
             } catch (KingsleyException e) {
-                System.out.println("    __________________________________________");
-                System.out.println("    " + e.getMessage());
-                System.out.println("    __________________________________________");
+                ui.showError(e);
             }
 
         }
 
-        System.out.println("    ___________________________________________");
-        System.out.println("    Bye! Hope to see you again soon!");
-        System.out.println("    ___________________________________________");
+        ui.showBye();
+    }
+
+    public static void main(String[] args) {
+        new Kingsley("./data/kingsley.txt").run();
     }
 
 
-    public static void handleMark(String input) throws KingsleyException {
-        String[] parts = input.split(" ");
-        if (parts.length < 2) {
+    public void handleMark(String input) throws KingsleyException {
+        if (input.trim().isEmpty()) {
             throw new KingsleyException("Need a number to indicate what task to mark");
         }
-        int taskNumber = Integer.parseInt(parts[1]) - 1;
+        int taskNumber = Integer.parseInt(input.trim()) - 1;
         if (taskNumber < 0) {
             throw new KingsleyException("We only use positive task numbers here :(");
         }
-        if (taskNumber >= taskCount) {
+        if (taskNumber >= tasks.size()) {
             throw new KingsleyException("Task number given is bigger than your total number of tasks!");
         }
         Task taskOfInterest = tasks.get(taskNumber);
         taskOfInterest.markAsDone();
         try {
-            LOCAL_STORAGE.save(new ArrayList<>(tasks));
+            storage.save(tasks.getTaskList());
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
-        System.out.println("    ___________________________________________");
-        System.out.println("    Nice! I've marked this task as done:");
-        System.out.println("       " + taskOfInterest.toString());
-        System.out.println("    ___________________________________________");
+        ui.showMark(taskOfInterest);
     }
 
-    public static void handleUnmark(String input) throws KingsleyException {
-        String[] parts = input.split(" ");
-        if (parts.length < 2) {
+    public void handleUnmark(String input) throws KingsleyException {
+        if (input.trim().isEmpty()) {
             throw new KingsleyException("Need a number to indicate what task to mark");
         }
-        int taskNumber = Integer.parseInt(parts[1]) - 1;
+        int taskNumber = Integer.parseInt(input.trim()) - 1;
         if (taskNumber < 0) {
             throw new KingsleyException("We only use positive task numbers here :(");
         }
-        if (taskNumber >= taskCount) {
+        if (taskNumber >= tasks.size()) {
             throw new KingsleyException("Task number given is bigger than your total number of tasks!");
         }
         Task taskOfInterest = tasks.get(taskNumber);
         taskOfInterest.markAsUndone();
-        Deadline deadlineTask;
 
         try {
-            LOCAL_STORAGE.save(new ArrayList<>(tasks));
+            storage.save(tasks.getTaskList());
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
-        System.out.println("    ___________________________________________");
-        System.out.println("    OK, I've marked this task as not done yet:");
-        System.out.println("       " + taskOfInterest.toString());
-        System.out.println("    ___________________________________________");
+        ui.showUnmark(taskOfInterest);
 }
-    public static void handleDeadline(String input) throws KingsleyException {
+    public void handleDeadline(String input) throws KingsleyException {
         int byPos = input.indexOf("/by");
         if (byPos == -1) {
             throw new KingsleyException("/by missing for separation of description and deadline");
         }
-        String taskDescription = input.substring("deadline".length(), byPos).trim();
+        String taskDescription = input.substring(0, byPos).trim();
         if (taskDescription.isEmpty()) {
             throw new KingsleyException("Missing name for deadline task");
         }
@@ -135,44 +129,31 @@ public class Kingsley {
             throw new KingsleyException("Invalid format for date and time for deadline (dd/mm/yyyy HHmm)");
         }
 
-
-
-
         tasks.add(deadlineTask);
-        taskCount++;
         try {
-            LOCAL_STORAGE.save(new ArrayList<>(tasks));
+            storage.save(tasks.getTaskList());
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
-        System.out.println("    ___________________________________________");
-        System.out.println("    Got it. I've added this task:");
-        System.out.println("        " + deadlineTask.toString());
-        System.out.println("    Now you have " + taskCount + " tasks in the list.");
-        System.out.println("    ___________________________________________");
+        ui.showDeadline(deadlineTask, tasks.size());
     }
 
-    public static void handleToDo(String input) throws KingsleyException {
-        String taskDescription = input.substring("todo".length()).trim();
+    public void handleToDo(String input) throws KingsleyException {
+        String taskDescription = input.trim();
         if (taskDescription.isEmpty()) {
             throw new KingsleyException("Please write a description for your todo");
         }
         Todo toDoTask = new Todo(taskDescription);
         tasks.add(toDoTask);
-        taskCount++;
         try {
-            LOCAL_STORAGE.save(new ArrayList<>(tasks));
+            storage.save(tasks.getTaskList());
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
-        System.out.println("    ___________________________________________");
-        System.out.println("    Got it. I've added this task:");
-        System.out.println("        " + toDoTask.toString());
-        System.out.println("    Now you have " + taskCount + " tasks in the list.");
-        System.out.println("    ___________________________________________");
+        ui.showToDo(toDoTask, tasks.size());
     }
 
-    public static void handleEvent(String input) throws KingsleyException {
+    public void handleEvent(String input) throws KingsleyException {
         int fromPos = input.indexOf("/from");
         if (fromPos == -1) {
             throw new KingsleyException("/from missing for separation of task description and deadline");
@@ -181,7 +162,7 @@ public class Kingsley {
         if (toPos == -1) {
             throw new KingsleyException("/to missing for separation of start date and end date");
         }
-        String taskDescription = input.substring("event".length(), fromPos).trim();
+        String taskDescription = input.substring(0, fromPos).trim();
         if (taskDescription.isEmpty()) {
             throw new KingsleyException("Event must have a description");
         }
