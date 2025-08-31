@@ -44,7 +44,8 @@ public class UiTest {
         }
 
         String out = buf.toString().replace("\r\n", "\n");
-        assertTrue(out.contains(" Bye! Hope to see you again soon!"));
+        assertTrue(out.contains(" Bye! Hope to see you again:q" +
+                " soon!"));
 
     }
 
