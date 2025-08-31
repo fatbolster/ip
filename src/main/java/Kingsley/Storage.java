@@ -16,6 +16,7 @@ public class Storage {
         this.filePath = filePath;
     }
 
+
     public ArrayList<Task> load() throws KingsleyException {
         ArrayList<Task> taskList = new ArrayList<>();
         File f = new File(filePath);

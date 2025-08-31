@@ -17,11 +17,18 @@ public class Parser {
         return new String[] { commandWord, arguments };
     }
 
-    public static void parseMark (String input, TaskList tasks, Storage storage, Ui ui) throws KingsleyException {
+    public static void parseMark(String input, TaskList tasks, Storage storage, Ui ui) throws KingsleyException {
         if (input.trim().isEmpty()) {
             throw new KingsleyException("Need a number to indicate what task to mark");
         }
-        int taskNumber = Integer.parseInt(input.trim()) - 1;
+
+        int taskNumber;
+        try {
+            taskNumber = Integer.parseInt(input.trim()) - 1;
+        } catch (NumberFormatException e) {
+            throw new KingsleyException("Please provide a valid number.");
+        }
+
         if (taskNumber < 0) {
             throw new KingsleyException("We only use positive task numbers here :(");
         }
