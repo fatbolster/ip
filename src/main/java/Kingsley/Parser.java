@@ -199,5 +199,16 @@ public class Parser {
         ui.showList(tasks.getTaskList());
     }
 
+    public static void parseFind(
+            String input, TaskList tasks, Ui ui) throws KingsleyException {
+        if (input.trim().isEmpty()) {
+            throw new KingsleyException("Please insert an input to find");
+        }
+        ui.showFind(tasks.find(input));
+
+    }
+
+
+
 
 }
