@@ -42,7 +42,9 @@ public abstract class Task {
         this.isDone = false;
     }
 
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String toString() {
         return "[" + this.getStatusIcon() + "] " + this.description;

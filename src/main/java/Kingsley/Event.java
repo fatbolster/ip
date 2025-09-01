@@ -23,12 +23,18 @@ public class Event extends Task {
         this.endTime = endTime;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String toString() {
         return "[E]" + super.toString() + " (from: " + DateParser.processDateTimeToString(startTime)
                 + " to: " + DateParser.processDateTimeToString(endTime) + ")";
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String toSaveFormat() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/yyyy HHmm");
