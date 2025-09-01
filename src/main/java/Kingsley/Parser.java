@@ -17,7 +17,8 @@ public class Parser {
         return new String[] { commandWord, arguments };
     }
 
-    public static void parseMark(String input, TaskList tasks, Storage storage, Ui ui) throws KingsleyException {
+    public static void parseMark(
+            String input, TaskList tasks, Storage storage, Ui ui) throws KingsleyException {
         if (input.trim().isEmpty()) {
             throw new KingsleyException("Need a number to indicate what task to mark");
         }
@@ -45,7 +46,8 @@ public class Parser {
         ui.showMark(taskOfInterest);
     }
 
-    public static void parseUnmark(String input, TaskList tasks, Storage storage, Ui ui) throws KingsleyException {
+    public static void parseUnmark(
+            String input, TaskList tasks, Storage storage, Ui ui) throws KingsleyException {
         if (input.trim().isEmpty()) {
             throw new KingsleyException("Need a number to indicate what task to mark");
         }
@@ -68,7 +70,8 @@ public class Parser {
     }
 
 
-    public static void parseDeadline(String input, TaskList tasks, Storage storage, Ui ui) throws KingsleyException {
+    public static void parseDeadline(
+            String input, TaskList tasks, Storage storage, Ui ui) throws KingsleyException {
         int byPos = input.indexOf("/by");
         if (byPos == -1) {
             throw new KingsleyException("/by missing for separation of description and deadline");
@@ -98,7 +101,8 @@ public class Parser {
         ui.showDeadline(deadlineTask, tasks.size());
     }
 
-    public static void parseToDo(String input, TaskList tasks, Storage storage, Ui ui)  throws KingsleyException {
+    public static void parseToDo(
+            String input, TaskList tasks, Storage storage, Ui ui)  throws KingsleyException {
         String taskDescription = input.trim();
         if (taskDescription.isEmpty()) {
             throw new KingsleyException("Please write a description for your todo");
@@ -113,7 +117,8 @@ public class Parser {
         ui.showToDo(toDoTask, tasks.size());
     }
 
-    public static void parseEvent(String input, TaskList tasks, Storage storage, Ui ui) throws KingsleyException {
+    public static void parseEvent(
+            String input, TaskList tasks, Storage storage, Ui ui) throws KingsleyException {
         int fromPos = input.indexOf("/from");
         if (fromPos == -1) {
             throw new KingsleyException("/from missing for separation of task description and deadline");
@@ -164,7 +169,8 @@ public class Parser {
         ui.showEvent(eventTask, tasks.size());
     }
 
-    public static void parseDelete(String input, TaskList tasks, Storage storage, Ui ui) throws KingsleyException {
+    public static void parseDelete(
+            String input, TaskList tasks, Storage storage, Ui ui) throws KingsleyException {
         if (input.trim().isEmpty()) {
             throw new KingsleyException("Need a number to indicate what task to mark");
         }
@@ -185,7 +191,8 @@ public class Parser {
         ui.showDelete(deletedTask, tasks.size());
     }
 
-    public static void parseList(TaskList tasks, Ui ui) throws KingsleyException {
+    public static void parseList(
+            TaskList tasks, Ui ui) throws KingsleyException {
         if (tasks.size() == 0) {
             throw new KingsleyException("No tasks to show :D");
         }
