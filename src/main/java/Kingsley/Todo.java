@@ -1,7 +1,14 @@
 package Kingsley;
 
+/**
+ * A Todo is a type of task with only a description.
+ */
 public class Todo extends Task {
-
+    /**
+     * Creates a todo event with the input description
+     *
+     * @param description description of todo
+     */
     public Todo(String description) {
         super(description);
     }

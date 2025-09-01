@@ -8,15 +8,27 @@ import java.io.IOException;
 import java.io.File;
 import java.util.Scanner;
 
-
+/**
+ * Handles saving and loading of tasks to and from a source file respectively.
+ */
 public class Storage {
     private final String filePath;
 
+    /**
+     * Create a storage object which reads and loads with the input filepath.
+     *
+     * @param filePath file path of the file the storage object will communicate with
+     */
     public Storage(String filePath) {
         this.filePath = filePath;
     }
 
-
+    /**
+     * Retrieves task list from storage file.
+     *
+     * @return an arraylist of tasks from the file path
+     * @throws KingsleyException if input file does not exist
+     */
     public ArrayList<Task> load() throws KingsleyException {
         ArrayList<Task> taskList = new ArrayList<>();
         File f = new File(filePath);
@@ -72,7 +84,11 @@ public class Storage {
 
 
 
-
+    /**
+     * Saves a given arraylist of task into storage file
+     *
+     * @throws IOException if problems are encountered when writing to the file
+     */
     public void save(ArrayList<Task> taskList) throws IOException {
         File f = new File(filePath);
         File parent = f.getParentFile();

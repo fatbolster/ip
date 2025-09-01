@@ -2,12 +2,22 @@ package Kingsley;
 
 import java.util.Scanner;
 
+/**
+ * Represents the Kingsley Chatbot application
+ *
+ * Initializes UI, storage and task list
+ * It will respond to user according to his/her input commands until he/she exits the program
+ */
 public class Kingsley {
     private Ui ui;
     private Storage storage;
     private TaskList tasks;
 
-
+    /**
+     * Creates a new instance of the Kingsley Chatbot
+     *
+     * @param filePath file path where task data is stored
+     */
     public Kingsley(String filePath) {
         this.ui = new Ui();
         this.storage = new Storage(filePath);
@@ -18,6 +28,14 @@ public class Kingsley {
         }
     }
 
+    /**
+     * Runs the main loop of the application
+     *
+     * The chatbot greets the user greeting first. It then repeatedly takes in user commands until the user types "bye"
+     *
+     * Chatbot will send a goodbye message to user upon exiting loop
+     *
+     **/
     public void run() {
         Scanner sc = new Scanner(System.in);
         ui.showGreeting();
@@ -57,6 +75,11 @@ public class Kingsley {
         ui.showBye();
     }
 
+    /**
+     * Entry point of the application
+     *
+     * @param args command line arguments (not used)
+     */
     public static void main(String[] args) {
         new Kingsley("./data/kingsley.txt").run();
     }
