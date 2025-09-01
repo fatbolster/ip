@@ -37,14 +37,16 @@ public class Kingsley {
                     Parser.parseUnmark(arguments, tasks, storage, ui);
                 } else if (command.equals("deadline")) {
                     Parser.parseDeadline(arguments, tasks, storage, ui);
-                } else if (input.startsWith("delete")) {
+                } else if (command.equals("delete")) {
                     Parser.parseDelete(arguments, tasks, storage, ui);
-                } else if (input.startsWith("event")) {
+                } else if (command.equals("event")) {
                     Parser.parseEvent(arguments, tasks, storage, ui);
-                } else if (input.startsWith("todo")) {
+                } else if (command.equals("todo")) {
                     Parser.parseToDo(arguments, tasks, storage, ui);
-                } else if (input.equals("list")) {
+                } else if (command.equals("list")) {
                     Parser.parseList(tasks, ui);
+                } else if (command.equals("find")) {
+                    Parser.parseFind(arguments, tasks, ui);
                 } else {
                     throw new KingsleyException("No such command exists :(");
                 }

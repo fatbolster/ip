@@ -33,6 +33,17 @@ public class TaskList {
         return this.tasks;
     }
 
+    public ArrayList<Task> find(String keyword) {
+        ArrayList<Task> res = new ArrayList<>();
+        for (Task t: this.tasks) {
+            if (t.getDescription().contains(keyword)) {
+                res.add(t);
+            }
+        }
+        return res;
+
+    }
+
 
 
 

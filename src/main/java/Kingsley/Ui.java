@@ -80,6 +80,17 @@ public class Ui {
         printLine();
     }
 
+    public void showFind(List<Task> taskList) {
+        printLine();
+        System.out.println("    Here are the matching tasks in your list:");
+        for (int i = 0; i < taskList.size() ; i++) {
+            int taskNumber = i + 1;
+            Task currentTask = taskList.get(i);
+            System.out.println("     " + taskNumber + ". " + currentTask.toString());
+        }
+        printLine();
+    }
+
     public void printLine() {
         System.out.println(NEW_LINE);
     }
@@ -87,6 +98,7 @@ public class Ui {
     public String pluralize(String word, int n) {
         return n <= 1 ? word : word + "s";
     }
+
 
 
 
