@@ -29,53 +29,48 @@ public class Kingsley {
     }
 
     /**
-     * Runs the main loop of the application
+     * Communicates with the Parser of the application to understand user inputs
      *
-     * The chatbot greets the user greeting first. It then repeatedly takes in user commands until the user types "bye"
-     *
-     * Chatbot will send a goodbye message to user upon exiting loop
+     * Function will take in one user input at a time and respond accordingly with a corresponding String
      *
      **/
-    public void run() {
-        Scanner sc = new Scanner(System.in);
-        ui.showGreeting();
+    public String getResponse(String input) {
 
-        while (true) {
-            String input = sc.nextLine();
-            if (input.startsWith("bye")) {
-                break;
-            }
             try {
                 String[] parts = Parser.split(input);
                 String command = parts[0];
                 String arguments = parts[1];
                 if (command.equals("mark")) {
-                    Parser.parseMark(arguments, tasks, storage, ui);
+                    return Parser.parseMark(arguments, tasks, storage, ui);
                 } else if (command.equals("unmark")) {
-                    Parser.parseUnmark(arguments, tasks, storage, ui);
+                    return Parser.parseUnmark(arguments, tasks, storage, ui);
                 } else if (command.equals("deadline")) {
-                    Parser.parseDeadline(arguments, tasks, storage, ui);
+                    return Parser.parseDeadline(arguments, tasks, storage, ui);
                 } else if (command.equals("delete")) {
-                    Parser.parseDelete(arguments, tasks, storage, ui);
+                    return Parser.parseDelete(arguments, tasks, storage, ui);
                 } else if (command.equals("event")) {
-                    Parser.parseEvent(arguments, tasks, storage, ui);
+                    return Parser.parseEvent(arguments, tasks, storage, ui);
                 } else if (command.equals("todo")) {
-                    Parser.parseToDo(arguments, tasks, storage, ui);
+                    return Parser.parseToDo(arguments, tasks, storage, ui);
                 } else if (command.equals("list")) {
-                    Parser.parseList(tasks, ui);
+                    return Parser.parseList(tasks, ui);
                 } else if (command.equals("find")) {
-                    Parser.parseFind(arguments, tasks, ui);
+                    return Parser.parseFind(arguments, tasks, ui);
+                } else if (command.equals("bye")) {
+                    return ui.showBye();
                 } else {
                     throw new KingsleyException("No such command exists :(");
                 }
             } catch (KingsleyException e) {
-                ui.showError(e);
+                return ui.showError(e);
             }
 
-        }
-
-        ui.showBye();
     }
+
+    public String getGreeting() {
+        return ui.showGreeting();
+    }
+
 
     /**
      * Entry point of the application
@@ -83,7 +78,7 @@ public class Kingsley {
      * @param args command line arguments (not used)
      */
     public static void main(String[] args) {
-        new Kingsley("./data/kingsley.txt").run();
+        System.out.println("Hello!");
     }
 
 
