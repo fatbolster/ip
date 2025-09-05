@@ -17,7 +17,7 @@ public class Parser {
         return new String[] { commandWord, arguments };
     }
 
-    public static void parseMark(
+    public static String parseMark(
             String input, TaskList tasks, Storage storage, Ui ui) throws KingsleyException {
         if (input.trim().isEmpty()) {
             throw new KingsleyException("Need a number to indicate what task to mark");
@@ -43,10 +43,10 @@ public class Parser {
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
-        ui.showMark(taskOfInterest);
+        return ui.showMark(taskOfInterest);
     }
 
-    public static void parseUnmark(
+    public static String parseUnmark(
             String input, TaskList tasks, Storage storage, Ui ui) throws KingsleyException {
         if (input.trim().isEmpty()) {
             throw new KingsleyException("Need a number to indicate what task to mark");
@@ -56,7 +56,7 @@ public class Parser {
             throw new KingsleyException("We only use positive task numbers here :(");
         }
         if (taskNumber >= tasks.size()) {
-            throw new KingsleyException("Kingsley.Task number given is bigger than your total number of tasks!");
+            throw new KingsleyException("Task number given is bigger than your total number of tasks!");
         }
         Task taskOfInterest = tasks.get(taskNumber);
         taskOfInterest.markAsUndone();
@@ -66,11 +66,11 @@ public class Parser {
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
-        ui.showUnmark(taskOfInterest);
+        return ui.showUnmark(taskOfInterest);
     }
 
 
-    public static void parseDeadline(
+    public static String parseDeadline(
             String input, TaskList tasks, Storage storage, Ui ui) throws KingsleyException {
         int byPos = input.indexOf("/by");
         if (byPos == -1) {
@@ -98,10 +98,10 @@ public class Parser {
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
-        ui.showDeadline(deadlineTask, tasks.size());
+        return ui.showDeadline(deadlineTask, tasks.size());
     }
 
-    public static void parseToDo(
+    public static String parseToDo(
             String input, TaskList tasks, Storage storage, Ui ui)  throws KingsleyException {
         String taskDescription = input.trim();
         if (taskDescription.isEmpty()) {
@@ -114,10 +114,10 @@ public class Parser {
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
-        ui.showToDo(toDoTask, tasks.size());
+        return ui.showToDo(toDoTask, tasks.size());
     }
 
-    public static void parseEvent(
+    public static String parseEvent(
             String input, TaskList tasks, Storage storage, Ui ui) throws KingsleyException {
         int fromPos = input.indexOf("/from");
         if (fromPos == -1) {
@@ -129,15 +129,15 @@ public class Parser {
         }
         String taskDescription = input.substring(0, fromPos).trim();
         if (taskDescription.isEmpty()) {
-            throw new KingsleyException("Kingsley.Event must have a description");
+            throw new KingsleyException("Event must have a description");
         }
         String startTime = input.substring(fromPos + 5, toPos).trim();
         if (startTime.isEmpty()) {
-            throw new KingsleyException("Kingsley.Event must have a start time");
+            throw new KingsleyException("Event must have a start time");
         }
         String endTime = input.substring(toPos + 3).trim();
         if (endTime.isEmpty()) {
-            throw new KingsleyException("Kingsley.Event must have an end time");
+            throw new KingsleyException("Event must have an end time");
         }
 
         LocalDateTime formattedStartTime;
@@ -166,10 +166,10 @@ public class Parser {
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
-        ui.showEvent(eventTask, tasks.size());
+        return ui.showEvent(eventTask, tasks.size());
     }
 
-    public static void parseDelete(
+    public static String parseDelete(
             String input, TaskList tasks, Storage storage, Ui ui) throws KingsleyException {
         if (input.trim().isEmpty()) {
             throw new KingsleyException("Need a number to indicate what task to mark");
@@ -179,7 +179,7 @@ public class Parser {
             throw new KingsleyException("We only use positive task numbers here :(");
         }
         if (taskNumber >= tasks.size()) {
-            throw new KingsleyException("Kingsley.Task number given is bigger than your total number of tasks!");
+            throw new KingsleyException("Task number given is bigger than your total number of tasks!");
         }
         Task deletedTask = tasks.remove(taskNumber);
         try {
@@ -188,23 +188,23 @@ public class Parser {
             System.out.println(e.getMessage());
         }
 
-        ui.showDelete(deletedTask, tasks.size());
+        return ui.showDelete(deletedTask, tasks.size());
     }
 
-    public static void parseList(
+    public static String parseList(
             TaskList tasks, Ui ui) throws KingsleyException {
         if (tasks.size() == 0) {
             throw new KingsleyException("No tasks to show :D");
         }
-        ui.showList(tasks.getTaskList());
+        return ui.showList(tasks.getTaskList());
     }
 
-    public static void parseFind(
+    public static String parseFind(
             String input, TaskList tasks, Ui ui) throws KingsleyException {
         if (input.trim().isEmpty()) {
             throw new KingsleyException("Please insert an input to find");
         }
-        ui.showFind(tasks.find(input));
+        return ui.showFind(tasks.find(input));
 
     }
 
