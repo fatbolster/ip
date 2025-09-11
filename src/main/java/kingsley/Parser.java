@@ -167,6 +167,22 @@ public class Parser {
         }
 
         Event eventTask = new Event(taskDescription, formattedStartTime, formattedEndTime);
+
+        TaskList clashingEvents = new TaskList();
+        for (Task t : tasks.getTaskList()) {
+            if (t instanceof Event) {
+                if (Scheduler.overlap((Event) t, eventTask)) {
+                    clashingEvents.add(t);
+                }
+            }
+        }
+
+        if (clashingEvents.size() > 0) {
+            String msg = ui.showClash(clashingEvents);
+            throw new KingsleyException(msg);
+        }
+
+
         tasks.add(eventTask);
         try {
             storage.save(tasks.getTaskList());

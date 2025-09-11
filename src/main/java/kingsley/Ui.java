@@ -1,5 +1,6 @@
 package kingsley;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Ui {
@@ -86,6 +87,16 @@ public class Ui {
 
     public String pluralize(String word, int n) {
         return n <= 1 ? word : word + "s";
+    }
+
+    public String showClash(TaskList t) {
+        ArrayList<Task> clashingEvents = t.getTaskList();
+        StringBuilder sb = new StringBuilder("Event conflicts with these current event(s): \n");
+        for (Task e : clashingEvents) {
+            sb.append("     ").append(e.toString()).append('\n');
+        }
+        return sb.toString();
+
     }
 
 
