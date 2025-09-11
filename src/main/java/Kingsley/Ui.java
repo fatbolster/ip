@@ -5,103 +5,90 @@ import java.util.List;
 public class Ui {
     private static String NEW_LINE = "    __________________________________________";
 
-    public void showGreeting() {
-        printLine();
-        System.out.println("    Hello! I'm Kingsley.");
-        System.out.println("    What can I do for you?");
-        printLine();
+    public String showGreeting() {
+        return "Hello! I'm Kingsley. What can I do for you?";
     }
 
-    public void showBye() {
-        printLine();
-        System.out.println("    Bye! Hope to see you again soon!");
-        printLine();
+    public String showBye() {
+        return "Bye! Hope to see you again soon!";
     }
-    public void showMark(Task t) {
-        printLine();
-        System.out.println("    Nice! I've marked this task as done:");
-        System.out.println("       " + t.toString());
-        printLine();
+    public String showMark(Task t) {
+        return "Nice! I've marked this task as done:"
+                + "\n" + "       " + t.toString();
     }
 
-    public void showUnmark(Task t) {
-        printLine();
-        System.out.println("    Nice! I've marked this task as not done yet:");
-        System.out.println("       " + t.toString());
-        printLine();
+    public String showUnmark(Task t) {
+        return "Nice! I've marked this task as not done yet:"
+                + "\n" + "       " + t.toString();
     }
 
-    public void showDeadline(Deadline d, int taskCount) {
-        printLine();
-        System.out.println("    Got it. I've added this task:");
-        System.out.println("        " + d.toString());
-        System.out.println("    Now you have " + taskCount + " " + pluralize("task", taskCount) + " in the list.");
-        printLine();
+    public String showDeadline(Deadline d, int taskCount) {
+        return "Got it. I've added this task:"
+                + "        " + d.toString()
+                + "\n"
+                + "Now you have " + taskCount + " "
+                + pluralize("task", taskCount) + " in the list.";
     }
 
-    public void showToDo(Todo t, int taskCount) {
-        printLine();
-        System.out.println("    Got it. I've added this task:");
-        System.out.println("        " + t.toString());
-        System.out.println("    Now you have " + taskCount + " " + pluralize("task", taskCount) + " in the list.");
-        printLine();
+    public String showToDo(Todo t, int taskCount) {
+        return "Got it. I've added this task:"
+                + "\n" + "        " + t.toString()
+                + "\n"
+                + "Now you have " + taskCount + " " + pluralize("task", taskCount)
+                + " in the list.";
     }
 
-    public void showEvent(Event e, int taskCount) {
-        printLine();
-        System.out.println("    Got it. I've added this task:");
-        System.out.println("        " + e.toString());
-        System.out.println("    Now you have " + taskCount + " " + pluralize("task", taskCount) + " in the list.");
-        printLine();
+    public String showEvent(Event e, int taskCount) {
+        return "Got it. I've added this task:"
+                + "\n" + "        " + e.toString()
+                + "\n"
+                + "Now you have " + taskCount + " " + pluralize("task", taskCount)
+                + " in the list.";
     }
 
-    public void showDelete(Task t, int taskCount) {
-        printLine();
-        System.out.println("    Noted. I've rempved this task.");
-        System.out.println("       " + t.toString());
-        System.out.println("    Now you have " + taskCount + " " + pluralize("task", taskCount) + " in the list.");;
-        printLine();
+    public String showDelete(Task t, int taskCount) {
+        return "Noted. I've removed this task."
+                + "\n" + "        " + t.toString()
+                + "\n"
+                + "Now you have " + taskCount + " " + pluralize("task", taskCount)
+                + " in the list.";
     }
 
-    public void showList(List<Task> taskList) {
-        printLine();
-        System.out.println("    Here are the tasks in your list:");
+    public String showList(List<Task> taskList) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Here are the tasks in your list:").append("\n");
+
         for (int i = 0; i < taskList.size() ; i++) {
             int taskNumber = i + 1;
             Task currentTask = taskList.get(i);
-            System.out.println("     " + taskNumber + ". " + currentTask.toString());
+            sb.append("     ").append(taskNumber).append(". ")
+              .append(currentTask.toString()).append("\n");
         }
-        printLine();
+
+        return sb.toString();
     }
 
-    public void showError(KingsleyException e) {
-        printLine();
-        System.out.println("    " + e.getMessage());
-        printLine();
+    public String showError(KingsleyException e) {
+        return e.getMessage();
     }
 
-    public void showFind(List<Task> taskList) {
-        printLine();
-        System.out.println("    Here are the matching tasks in your list:");
+
+    public String showFind(List<Task> taskList) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Here are the matching tasks in your list:").append("\n");
         for (int i = 0; i < taskList.size() ; i++) {
             int taskNumber = i + 1;
             Task currentTask = taskList.get(i);
-            System.out.println("     " + taskNumber + ". " + currentTask.toString());
+            sb.append("     ").append(taskNumber).append(". ")
+              .append(currentTask.toString()).append("\n");
         }
-        printLine();
+        return sb.toString();
     }
 
-    public void printLine() {
-        System.out.println(NEW_LINE);
-    }
 
     public String pluralize(String word, int n) {
         return n <= 1 ? word : word + "s";
     }
-
-
-
-
 
 
 

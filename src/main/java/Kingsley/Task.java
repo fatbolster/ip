@@ -34,6 +34,15 @@ public abstract class Task {
         return "[" + this.getStatusIcon() + "] " + this.description;
     }
 
+
+    /**
+     * Converts the task into a string to be added into the saved file.
+     */
+    public String getDescription() {
+        return this.description;
+    }
+
+
     public abstract String toSaveFormat();
 
 

@@ -41,19 +41,18 @@ public class ParserTest {
     class UiStub extends Ui {
         private boolean markHandlerCalled = false;
         private boolean eventHandlerCalled = false;
-        private Task lastTask;
 
         @Override
-        public void showMark(Task t) {
+        public String showMark(Task t) {
             markHandlerCalled = true;
-            lastTask = t;
+            return super.showMark(t);
         }
 
 
         @Override
-        public void showEvent(Event e, int taskCount) {
+        public String showEvent(Event e, int taskCount) {
             eventHandlerCalled = true;
-            lastTask = e;
+            return super.showEvent(e, taskCount);
         }
     }
 
