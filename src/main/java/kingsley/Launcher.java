@@ -1,4 +1,4 @@
-package Kingsley;
+package kingsley;
 import javafx.application.Application;
 
 /**

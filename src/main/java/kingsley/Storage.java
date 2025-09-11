@@ -1,4 +1,4 @@
-package Kingsley;
+package kingsley;
 
 import java.io.FileNotFoundException;
 import java.io.FileWriter;

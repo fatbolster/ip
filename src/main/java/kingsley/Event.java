@@ -1,4 +1,4 @@
-package Kingsley;
+package kingsley;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -7,8 +7,8 @@ import java.time.format.DateTimeFormatter;
  * An event is a task with a time period, with a specified start time and end time.
  */
 public class Event extends Task {
-    protected LocalDateTime startTime;
-    protected LocalDateTime endTime;
+    protected final LocalDateTime startTime;
+    protected final LocalDateTime endTime;
 
     /**
      * Creates an event with the input description, start time and end time.
@@ -21,6 +21,20 @@ public class Event extends Task {
         super(description);
         this.startTime = startTime;
         this.endTime = endTime;
+    }
+
+    /**
+     * Returns the start time of this event.
+     */
+    public LocalDateTime getStartTime() {
+        return startTime;
+    }
+
+    /**
+     * Returns the end time of this event.
+     */
+    public LocalDateTime getEndTime() {
+        return endTime;
     }
 
     /**

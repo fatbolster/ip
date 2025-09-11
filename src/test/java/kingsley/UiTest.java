@@ -1,4 +1,4 @@
-package Kingsley;
+package kingsley;
 
 import org.junit.jupiter.api.Test;
 

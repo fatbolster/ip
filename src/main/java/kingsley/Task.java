@@ -1,4 +1,4 @@
-package Kingsley;
+package kingsley;
 
 public abstract class Task {
     protected String description;
@@ -35,12 +35,6 @@ public abstract class Task {
     }
 
 
-    /**
-     * Converts the task into a string to be added into the saved file.
-     */
-    public String getDescription() {
-        return this.description;
-    }
 
 
     public abstract String toSaveFormat();
