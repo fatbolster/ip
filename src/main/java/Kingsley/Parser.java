@@ -7,6 +7,8 @@ import java.time.format.DateTimeParseException;
 public class Parser {
 
     public static String[] split(String input) throws KingsleyException {
+        assert input != null: "input is non-null";
+
         if (input == null) {
             throw new KingsleyException("Empty Command :(");
         }
@@ -19,6 +21,8 @@ public class Parser {
 
     public static void parseMark(
             String input, TaskList tasks, Storage storage, Ui ui) throws KingsleyException {
+        assert tasks != null && storage != null && ui != null : "dependencies must be in place";
+
         if (input.trim().isEmpty()) {
             throw new KingsleyException("Need a number to indicate what task to mark");
         }
@@ -198,6 +202,17 @@ public class Parser {
         }
         ui.showList(tasks.getTaskList());
     }
+
+    public static void parseFind(
+            String input, TaskList tasks, Ui ui) throws KingsleyException {
+        if (input.trim().isEmpty()) {
+            throw new KingsleyException("Please insert an input to find");
+        }
+        ui.showFind(tasks.find(input));
+
+    }
+
+
 
 
 }
