@@ -1,10 +1,8 @@
-package Kingsley;
+package kingsley;
 
 import java.util.List;
 
 public class Ui {
-    private static String NEW_LINE = "    __________________________________________";
-
     public String showGreeting() {
         return "Hello! I'm Kingsley. What can I do for you?";
     }

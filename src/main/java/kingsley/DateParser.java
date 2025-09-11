@@ -1,4 +1,4 @@
-package Kingsley;
+package kingsley;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

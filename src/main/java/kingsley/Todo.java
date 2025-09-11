@@ -1,4 +1,4 @@
-package Kingsley;
+package kingsley;
 
 /**
  * A Todo is a type of task with only a description.

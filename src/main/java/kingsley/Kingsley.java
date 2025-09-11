@@ -1,6 +1,4 @@
-package Kingsley;
-
-import java.util.Scanner;
+package kingsley;
 
 /**
  * Represents the Kingsley Chatbot application
