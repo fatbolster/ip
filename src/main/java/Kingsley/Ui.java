@@ -72,6 +72,7 @@ public class Ui {
         return e.getMessage();
     }
 
+
     public String showFind(List<Task> taskList) {
         StringBuilder sb = new StringBuilder();
         sb.append("Here are the matching tasks in your list:").append("\n");
@@ -88,6 +89,7 @@ public class Ui {
     public String pluralize(String word, int n) {
         return n <= 1 ? word : word + "s";
     }
+
 
 
 }

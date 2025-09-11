@@ -7,6 +7,8 @@ import java.time.format.DateTimeParseException;
 public class Parser {
 
     public static String[] split(String input) throws KingsleyException {
+        assert input != null: "input is non-null";
+
         if (input == null) {
             throw new KingsleyException("Empty Command :(");
         }
@@ -17,8 +19,10 @@ public class Parser {
         return new String[] { commandWord, arguments };
     }
 
+
     public static String parseMark(
             String input, TaskList tasks, Storage storage, Ui ui) throws KingsleyException {
+        assert tasks != null && storage != null && ui != null : "dependencies must be in place";
         if (input.trim().isEmpty()) {
             throw new KingsleyException("Need a number to indicate what task to mark");
         }
@@ -46,6 +50,7 @@ public class Parser {
         return ui.showMark(taskOfInterest);
     }
 
+
     public static String parseUnmark(
             String input, TaskList tasks, Storage storage, Ui ui) throws KingsleyException {
         if (input.trim().isEmpty()) {
@@ -68,6 +73,7 @@ public class Parser {
         }
         return ui.showUnmark(taskOfInterest);
     }
+
 
 
     public static String parseDeadline(
@@ -116,6 +122,7 @@ public class Parser {
         }
         return ui.showToDo(toDoTask, tasks.size());
     }
+
 
     public static String parseEvent(
             String input, TaskList tasks, Storage storage, Ui ui) throws KingsleyException {
@@ -169,6 +176,7 @@ public class Parser {
         return ui.showEvent(eventTask, tasks.size());
     }
 
+
     public static String parseDelete(
             String input, TaskList tasks, Storage storage, Ui ui) throws KingsleyException {
         if (input.trim().isEmpty()) {
@@ -191,6 +199,7 @@ public class Parser {
         return ui.showDelete(deletedTask, tasks.size());
     }
 
+
     public static String parseList(
             TaskList tasks, Ui ui) throws KingsleyException {
         if (tasks.size() == 0) {
@@ -198,7 +207,7 @@ public class Parser {
         }
         return ui.showList(tasks.getTaskList());
     }
-
+  
     public static String parseFind(
             String input, TaskList tasks, Ui ui) throws KingsleyException {
         if (input.trim().isEmpty()) {
