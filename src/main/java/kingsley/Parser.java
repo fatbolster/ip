@@ -233,6 +233,10 @@ public class Parser {
 
     }
 
+    public static String parseBye(Ui ui) {
+        return ui.showBye();
+    }
+
 
 
 

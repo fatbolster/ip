@@ -11,6 +11,8 @@ public class Kingsley {
     private Storage storage;
     private TaskList tasks;
 
+    private boolean isExit = false;
+
     /**
      * Creates a new instance of the Kingsley Chatbot
      *
@@ -33,7 +35,6 @@ public class Kingsley {
      *
      **/
     public String getResponse(String input) {
-
             try {
                 String[] parts = Parser.split(input);
                 String command = parts[0];
@@ -55,7 +56,8 @@ public class Kingsley {
                 } else if (command.equals("find")) {
                     return Parser.parseFind(arguments, tasks, ui);
                 } else if (command.equals("bye")) {
-                    return ui.showBye();
+                    this.isExit = true;
+                    return Parser.parseBye(ui);
                 } else {
                     throw new KingsleyException("No such command exists :(");
                 }
@@ -63,6 +65,10 @@ public class Kingsley {
                 return ui.showError(e);
             }
 
+    }
+
+    public boolean getExitStatus() {
+        return this.isExit;
     }
 
     public String getGreeting() {

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Ui {
+    // made indent a static constant, as per AI suggestions (ChatGPT 5)
+    private static final String INDENT = "       ";
     public String showGreeting() {
         return "Hello! I'm Kingsley. What can I do for you?";
     }
@@ -13,17 +15,17 @@ public class Ui {
     }
     public String showMark(Task t) {
         return "Nice! I've marked this task as done:"
-                + "\n" + "       " + t.toString();
+                + "\n" + INDENT + t.toString();
     }
 
     public String showUnmark(Task t) {
         return "Nice! I've marked this task as not done yet:"
-                + "\n" + "       " + t.toString();
+                + "\n" + INDENT + t.toString();
     }
 
     public String showDeadline(Deadline d, int taskCount) {
         return "Got it. I've added this task:"
-                + "        " + d.toString()
+                + INDENT + d.toString()
                 + "\n"
                 + "Now you have " + taskCount + " "
                 + pluralize("task", taskCount) + " in the list.";
@@ -31,7 +33,7 @@ public class Ui {
 
     public String showToDo(Todo t, int taskCount) {
         return "Got it. I've added this task:"
-                + "\n" + "        " + t.toString()
+                + "\n" + INDENT + t.toString()
                 + "\n"
                 + "Now you have " + taskCount + " " + pluralize("task", taskCount)
                 + " in the list.";
@@ -39,7 +41,7 @@ public class Ui {
 
     public String showEvent(Event e, int taskCount) {
         return "Got it. I've added this task:"
-                + "\n" + "        " + e.toString()
+                + "\n" + INDENT + e.toString()
                 + "\n"
                 + "Now you have " + taskCount + " " + pluralize("task", taskCount)
                 + " in the list.";
@@ -47,7 +49,7 @@ public class Ui {
 
     public String showDelete(Task t, int taskCount) {
         return "Noted. I've removed this task."
-                + "\n" + "        " + t.toString()
+                + "\n" + INDENT + t.toString()
                 + "\n"
                 + "Now you have " + taskCount + " " + pluralize("task", taskCount)
                 + " in the list.";
@@ -60,7 +62,7 @@ public class Ui {
         for (int i = 0; i < taskList.size() ; i++) {
             int taskNumber = i + 1;
             Task currentTask = taskList.get(i);
-            sb.append("     ").append(taskNumber).append(". ")
+            sb.append(INDENT).append(taskNumber).append(". ")
               .append(currentTask.toString()).append("\n");
         }
 
@@ -78,7 +80,7 @@ public class Ui {
         for (int i = 0; i < taskList.size() ; i++) {
             int taskNumber = i + 1;
             Task currentTask = taskList.get(i);
-            sb.append("     ").append(taskNumber).append(". ")
+            sb.append(INDENT).append(taskNumber).append(". ")
               .append(currentTask.toString()).append("\n");
         }
         return sb.toString();
@@ -93,7 +95,7 @@ public class Ui {
         ArrayList<Task> clashingEvents = t.getTaskList();
         StringBuilder sb = new StringBuilder("Event conflicts with these current event(s): \n");
         for (Task e : clashingEvents) {
-            sb.append("     ").append(e.toString()).append('\n');
+            sb.append(INDENT).append(e.toString()).append('\n');
         }
         return sb.toString();
 
