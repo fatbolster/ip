@@ -25,7 +25,7 @@ public class Ui {
 
     public String showDeadline(Deadline d, int taskCount) {
         return "Got it. I've added this task:"
-                + INDENT + d.toString()
+                + "\n" + INDENT + d.toString()
                 + "\n"
                 + "Now you have " + taskCount + " "
                 + pluralize("task", taskCount) + " in the list.";
