@@ -1,7 +1,6 @@
 # Kingsley User Guide
 
-![Screenshot 2025-09-19 at 7.52.04 PM.png](../../../../../var/folders/32/jr3tc6xn0lg2d8xlx3jdvd3c0000gn/T/TemporaryItems/NSIRD_screencaptureui_GIEiPZ/Screenshot%202025-09-19%20at%207.52.04%E2%80%AFPM.png)
-
+![Ui Screenshot](Ui.png)
 
 Kingsley is a real-time virtual assistant that can help you with task management, tracking of deadlines and efficient scheduling. 
 
